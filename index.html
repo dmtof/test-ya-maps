@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <head>
+        <script src="https://api-maps.yandex.ru/2.1/?apikey=11b69424-5c30-465d-88e7-ff74f2d0cb65
+&lang=ru_RU" type="text/javascript">
+</script>
+    </head>
+
+    <style>
+        /* The switch - the box around the slider */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+
+            margin-bottom: 1em;
+        }
+
+        /* Hide default HTML checkbox */
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        /* The slider */
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked+.slider {
+            background-color: #2196F3;
+        }
+
+        input:focus+.slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked+.slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        #map {
+            filter: grayscale(1);
+            -ms-filter: grayscale(1);
+            -webkit-filter: grayscale(1);
+            -moz-filter: grayscale(1);
+            -o-filter: grayscale(1);
+        }
+    </style>
+</head>
+
+<body>
+    <p>Change colors:</p>
+    <label class="switch">
+        <input id="switcher-id" type="checkbox">
+        <span class="slider round"></span>
+    </label>
+
+    <div id="map" style="width: 600px; height: 400px"></div>
+
+    <script type="text/javascript">
+        ymaps.ready(init);
+
+        function init() {
+            var myMap = new ymaps.Map("map", {
+                center: [55.751979, 37.617499],
+                zoom: 15
+            }),
+
+                // Создаем метку с помощью вспомогательного класса.
+                myPlacemark1 = new ymaps.Placemark([55.751979, 37.617499], {
+                    // Свойства.
+                    // Содержимое хинта.
+                    hintContent: 'Надпись, которая всплаывет при наведении на метку'
+                }, {
+                    // Опции
+                    // Своё изображение иконки метки.
+                    iconImageHref: 'https://static.tildacdn.com/tild3061-3235-4537-b066-616662373363/Group_783.svg',
+                    // Размеры метки.
+                    iconImageSize: [130, 130],
+                    // Смещение левого верхнего угла иконки относительно
+                    // её "ножки" (точки привязки).
+                    iconImageOffset: [-65, -110]
+                })
+
+
+            // Добавляем все метки на карту.
+            myMap.geoObjects
+                .add(myPlacemark1)
+
+        }
+
+        var checkbox = document.getElementById("switcher-id");
+
+        checkbox.addEventListener('change', function () {
+            sd = document.getElementById('map');
+            if (this.checked) {
+                sd.style.filter = 'invert(1) grayscale(1)';
+            } else {
+                sd.style.filter = 'grayscale(1)';
+            }
+        });
+
+
+    </script>
+</body>
+
+</html>
